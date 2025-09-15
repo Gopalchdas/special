@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Something Special For You 💕</title>
+    <title>तुम्हारे लिए कुछ खास 💕</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -284,6 +284,162 @@
             transition: width 0.5s ease;
             box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
         }
+
+        /* Greeting Card Styles */
+        .card-container {
+            perspective: 1000px;
+            margin: 20px auto;
+            width: 400px;
+            height: 350px;
+        }
+
+        .greeting-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .greeting-card.opened {
+            transform: rotateY(-180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card-front {
+            background: linear-gradient(145deg, #ff69b4, #ff1493);
+            color: white;
+            transform: rotateY(0deg);
+        }
+
+        .card-back {
+            background: linear-gradient(145deg, #fff0f5, #ffe4e1);
+            color: #d63384;
+            transform: rotateY(180deg);
+            border: 3px solid #ff69b4;
+            overflow-y: auto;
+        }
+
+        .card-front h2 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-front p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-back h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #ff1493;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-back .message-content {
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+        }
+
+        .card-back p {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            color: #6b2c5a;
+        }
+
+        .card-back .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.3rem;
+            color: #ff1493;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .open-instruction {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #ff69b4;
+            font-style: italic;
+            animation: pulse 2s infinite;
+        }
+
+        .card-hearts {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+        }
+
+        .card-sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 2s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .card-container {
+                width: 90%;
+                height: 300px;
+            }
+            
+            .card-front h2, .card-back h3 {
+                font-size: 1.8rem;
+            }
+            
+            .card-front p, .card-back p {
+                font-size: 0.85rem;
+            }
+            
+            .card-back .message-content {
+                margin-top: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -292,10 +448,11 @@
     <div class="container" id="mainContainer">
         <!-- Welcome Screen -->
         <div id="welcome" class="screen">
+            
             <h1>Hey Sweetheart (Simmi), I made something special for you 💕</h1>
             <div class="emoji">💝</div>
-            <p class="question">Take a deep breath and click start when you're ready...</p>
-            <button onclick="startJourney()">Start</button>
+            <p class="question">गहरी सांस लो और जब तैयार हो तो "शुरू करो" पर क्लिक करो...</p>
+            <button onclick="startJourney()">शुरू करो</button>
         </div>
 
         <!-- Question 1 -->
@@ -303,11 +460,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" style="width: 14%"></div>
             </div>
-            <h1>Question 1 of 7 🌹</h1>
-            <p class="question">Do you feel a little happier when we talk? 😊</p>
+            <h1>Question 1 / 7 🌹</h1>
+            <p class="question">क्या जब हम बात करते हैं तो तुम्हें थोड़ा और खुश महसूस होता है? 😊</p>
             <div class="btn-container">
-                <button onclick="nextQuestion(2)">Yes 💕</button>
-                <button class="no-btn" onclick="handleNo()">No</button>
+                <button onclick="nextQuestion(2)">हाँ 💕</button>
+                <button class="no-btn" onclick="handleNo()">नहीं</button>
             </div>
         </div>
 
@@ -316,11 +473,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" style="width: 28%"></div>
             </div>
-            <h1>Question 2 of 7 🌹</h1>
-            <p class="question">Do you ever smile secretly while thinking about me? 🙈</p>
+            <h1>Question 2 / 7 🌹</h1>
+            <p class="question">क्या कभी चुपके से मेरे बारे में सोचते हुए मुस्कुरा देती हो? 🙈</p>
             <div class="btn-container">
-                <button onclick="nextQuestion(3)">Yes 💕</button>
-                <button class="no-btn" onclick="handleNo()">No</button>
+                <button onclick="nextQuestion(3)">हाँ 💕</button>
+                <button class="no-btn" onclick="handleNo()">नहीं</button>
             </div>
         </div>
 
@@ -329,11 +486,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" style="width: 42%"></div>
             </div>
-            <h1>Question 3 of 7 🌹</h1>
-            <p class="question">If I said you're special to me, would you believe it? 💖</p>
+            <h1>Question 3 / 7 🌹</h1>
+            <p class="question">अगर मैं कहूँ कि तुम मेरे लिए खास हो, तो क्या तुम भरोसा करोगी? 💖</p>
             <div class="btn-container">
-                <button onclick="nextQuestion(4)">Yes 💕</button>
-                <button class="no-btn" onclick="handleNo()">No</button>
+                <button onclick="nextQuestion(4)">हाँ 💕</button>
+                <button class="no-btn" onclick="handleNo()">नहीं</button>
             </div>
         </div>
 
@@ -342,11 +499,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" style="width: 56%"></div>
             </div>
-            <h1>Question 4 of 7 🌹</h1>
-            <p class="question">Do you think our chats are the best part of your day? ✨</p>
+            <h1>Question 4 / 7 🌹</h1>
+            <p class="question">क्या तुम्हें लगता है हमारी बातें तुम्हारे दिन का सबसे अच्छा हिस्सा हैं? ✨</p>
             <div class="btn-container">
-                <button onclick="nextQuestion(5)">Yes 💕</button>
-                <button class="no-btn" onclick="handleNo()">No</button>
+                <button onclick="nextQuestion(5)">हाँ 💕</button>
+                <button class="no-btn" onclick="handleNo()">नहीं</button>
             </div>
         </div>
 
@@ -355,11 +512,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" style="width: 70%"></div>
             </div>
-            <h1>Question 5 of 7 🌹</h1>
-            <p class="question">If I held your hand, would you let me? 🤝💕</p>
+            <h1>Question 5 / 7 🌹</h1>
+            <p class="question">अगर मैं तुम्हारा हाथ पकड़ूँ, तो क्या तुम छोड़ोगी? 🤝💕</p>
             <div class="btn-container">
-                <button onclick="nextQuestion(6)">Yes 💕</button>
-                <button class="no-btn" onclick="handleNo()">No</button>
+                <button onclick="nextQuestion(6)">हाँ 💕</button>
+                <button class="no-btn" onclick="handleNo()">नहीं</button>
             </div>
         </div>
 
@@ -368,11 +525,11 @@
             <div class="progress-bar">
                 <div class="progress-fill" style="width: 84%"></div>
             </div>
-            <h1>Question 6 of 7 🌹</h1>
-            <p class="question">Do you feel that our bond is more than just friendship? 💫</p>
+            <h1>Question 6 / 7 🌹</h1>
+            <p class="question">क्या तुम्हें लगता है कि हमारा रिश्ता सिर्फ दोस्ती से कहीं ज़्यादा है? 💫</p>
             <div class="btn-container">
-                <button onclick="nextQuestion(7)">Yes 💕</button>
-                <button class="no-btn" onclick="handleNo()">No</button>
+                <button onclick="nextQuestion(7)">हाँ 💕</button>
+                <button class="no-btn" onclick="handleNo()">नहीं</button>
             </div>
         </div>
 
@@ -381,13 +538,13 @@
             <div class="progress-bar">
                 <div class="progress-fill" style="width: 100%"></div>
             </div>
-            <h1>🥰 Final Confession</h1>
-            <p class="question">Now the most important one…<br><br>
-                <strong>Will you make this friendship forever by turning it into a relationship with me?</strong></p>
+            <h1>🥰 आख़िरी सवाल</h1>
+            <p class="question">अब सबसे ज़रूरी सवाल…<br><br>
+                <strong>क्या तुम इस दोस्ती को हमेशा के लिए रिश्ते में बदलना चाहोगी?</strong></p>
             <div class="emoji">💍</div>
             <div class="btn-container">
-                <button class="final-yes" onclick="celebrate()">Yes 💕</button>
-                <button class="final-yes" onclick="celebrate()">Always 😍</button>
+                <button class="final-yes" onclick="celebrate()">हाँ 💕</button>
+                <button class="final-yes" onclick="celebrate()">हमेशा 😍</button>
             </div>
         </div>
 
@@ -398,13 +555,43 @@
             </div>
             <h1>Yay! This is the beginning of something beautiful 💖</h1>
             <div class="emoji">🎉💕🎊</div>
-            <p class="question">You just made me the happiest person in the world!</p>
+            <p class="question">तुमने मुझे दुनिया का सबसे खुश इंसान बना दिया!</p>
             <div class="emoji">👫</div>
+            <button onclick="showGreetingCard()" style="margin-top: 20px;">अपना खास कार्ड खोलो 💌</button>
+        </div>
+
+        <!-- Greeting Card Screen -->
+        <div id="greetingCard" class="screen hidden">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            <h1>तुम्हारे लिए खास कार्ड 💕</h1>
+            <div class="card-container">
+                <div class="greeting-card" id="greetingCardElement" onclick="openCard()">
+                    <div class="card-front">
+                        <div class="card-hearts">💕</div>
+                        <div class="card-sparkles" id="cardSparkles"></div>
+                        <h2>मेरी जान के लिए</h2>
+                        <p>क्लिक करके अपना सरप्राइज़ देखो! ✨</p>
+                        <div class="open-instruction">कार्ड को छूकर जादू देखो 💫</div>
+                    </div>
+                    <div class="card-back">
+                        <h3>मेरी प्यारी सिम्मी 💖</h3>
+                        <div class="message-content">
+                            <p>तुम्हारे साथ हर पल एक खूबसूरत सपना लगता है जिससे मैं कभी जागना नहीं चाहता। तुम्हारी मुस्कान मेरी दुनिया रोशन कर देती है और तुम्हारी हँसी सबसे प्यारी धुन है।</p>
+                            <p>तुमने मुझे सच्चे प्यार पर यक़ीन दिलाया है। मैं वादा करता हूँ कि हर दिन तुम्हें खुश रखूँगा और हर पल तुम्हारे साथ हँसी बाँटूँगा।</p>
+                            <p>हाँ कहने के लिए शुक्रिया 💕 अब से हमारी खूबसूरत सफर की शुरुआत है 🌟</p>
+                            <div class="signature">सिर्फ तुम्हारा,<br>हमेशा के लिए 💕</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button onclick="restartJourney()" style="margin-top: 20px;">फिर से पढ़ोगी? 💕</button>
         </div>
     </div>
 
     <div class="audio-notice" onclick="toggleMusic()">
-        🎵 Click for music
+        🎵 संगीत चलाओ
     </div>
 
     <!-- Audio element with your romantic music -->
@@ -467,26 +654,26 @@
             document.querySelectorAll('.no-btn').forEach(btn => {
                 btn.classList.add('disabled');
                 btn.onclick = null;
-                btn.innerHTML = 'No ';
+                btn.innerHTML = 'नहीं ';
             });
         }
 
         function handleNo() {
             noCount++;
             const messages = [
-                "Are you sure? Think again... 💭",
-                "Come on, I know you want to say yes! 😊",
-                "Maybe you clicked the wrong button? 🤔",
-                "Your smile says otherwise! Try again 😉",
-                "I think your heart disagrees with that choice! 💕",
-                "The universe is telling me you meant to click 'Yes' 🌟",
-                "Let's pretend that didn't happen... click Yes this time! 😄"
+                "पक्का? फिर से सोचो... 💭",
+                "चलो ना, मुझे पता है तुम हाँ कहना चाहती हो! 😊",
+                "शायद गलत बटन दबा दिया? 🤔",
+                "तुम्हारी मुस्कान कुछ और कह रही है! फिर से कोशिश करो 😉",
+                "मुझे लगता है तुम्हारा दिल इस चुनाव से सहमत नहीं! 💕",
+                "ब्रह्मांड मुझे बता रहा है कि तुमने 'हाँ' कहना चाहा था 🌟",
+                "चलो मान लेते हैं कि ऐसा नहीं हुआ... इस बार हाँ पर क्लिक करो! 😄"
             ];
             
             if (noCount <= messages.length) {
                 alert(messages[noCount - 1]);
             } else {
-                alert("The 'No' button seems to be broken! It only accepts 'Yes' now 😉");
+                alert("'नहीं' बटन खराब हो गया लगता है! अब यह सिर्फ 'हाँ' स्वीकार करता है 😉");
                 disableAllNoButtons();
             }
         }
@@ -501,6 +688,48 @@
             for (let i = 0; i < 20; i++) {
                 setTimeout(createHeart, i * 100);
             }
+        }
+
+        function showGreetingCard() {
+            hideAllScreens();
+            document.getElementById('greetingCard').classList.remove('hidden');
+            animateTransition();
+            createCardSparkles();
+        }
+
+        function openCard() {
+            const card = document.getElementById('greetingCardElement');
+            card.classList.add('opened');
+            
+            // Create extra sparkles when card opens
+            setTimeout(() => {
+                createCardSparkles();
+            }, 1000);
+        }
+
+        function createCardSparkles() {
+            const sparklesContainer = document.getElementById('cardSparkles');
+            sparklesContainer.innerHTML = '';
+            
+            for (let i = 0; i < 15; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 2 + 's';
+                sparkle.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                sparklesContainer.appendChild(sparkle);
+            }
+        }
+
+        function restartJourney() {
+            hideAllScreens();
+            document.getElementById('welcome').classList.remove('hidden');
+            animateTransition();
+            
+            // Reset the card
+            const card = document.getElementById('greetingCardElement');
+            card.classList.remove('opened');
         }
 
         function hideAllScreens() {
@@ -550,10 +779,10 @@
             const audio = document.getElementById('bgMusic');
             if (musicPlaying) {
                 audio.pause();
-                document.querySelector('.audio-notice').innerHTML = '🔇 Click for music';
+                document.querySelector('.audio-notice').innerHTML = '🔇 संगीत चलाओ';
             } else {
                 audio.play();
-                document.querySelector('.audio-notice').innerHTML = '🎵 Music playing';
+                document.querySelector('.audio-notice').innerHTML = '🎵 संगीत बज रहा है';
             }
             musicPlaying = !musicPlaying;
         }
