@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Videos - Homoeo Amigo</title>
+    <meta name="description" content="Watch educational videos on homeopathy, health tips, and treatment guidance from Homoeo Amigo experts.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .video-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .video-thumbnail {
+            position: relative;
+            height: 200px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(13, 92, 157, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            transition: var(--transition);
+        }
+        .video-card:hover .play-button {
+            transform: translate(-50%, -50%) scale(1.1);
+            background: var(--primary-color);
+        }
+        .video-duration {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        .video-content {
+            padding: 20px;
+        }
+        .video-category {
+            color: var(--primary-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        .video-description {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .video-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+        .video-views {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .video-date {
+            color: var(--light-text);
+        }
+        .video-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .category-filter {
+            padding: 8px 20px;
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        .category-filter:hover, .category-filter.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .featured-video {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            margin-bottom: 50px;
+        }
+        .featured-video-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            align-items: center;
+        }
+        .featured-thumbnail {
+            height: 300px;
+            position: relative;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .featured-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .featured-info {
+            padding: 40px;
+        }
+        .featured-info h2 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        .featured-info p {
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .watch-now-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .watch-now-btn:hover {
+            background: #0d47a1;
+            transform: translateY(-2px);
+        }
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .video-modal.active {
+            display: flex;
+        }
+        .modal-content {
+            position: relative;
+            max-width: 900px;
+            width: 90%;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        .modal-video {
+            width: 100%;
+            height: 500px;
+            background: #000;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 2001;
+        }
+        .search-box {
+            max-width: 400px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+        .search-box input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        @media (max-width: 768px) {
+            .featured-video-content {
+                grid-template-columns: 1fr;
+            }
+            .featured-info {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="logo.webp" alt="Homoeo Amigo Logo" class="logo-img">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT US</a></li>
+                    <li class="dropdown">
+                        <a href="#treatments" class="dropdown-toggle">TREATMENTS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#homoeopathy" class="dropdown-toggle">HOMOEOPATHY <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                            <li><a href="faqs.html">FAQs</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#media" class="dropdown-toggle">MEDIA <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="press-releases.html">Press Releases</a></li>
+                            <li><a href="videos.html" class="active">Videos</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#contact">CONTACT US</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#consultation" class="btn btn-primary">Doctor Consultation</a>
+                    <a href="#chat" class="btn btn-outline">Chat with Experts</a>
+                </div>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1>Health Videos</h1>
+                <p>Educational videos on homeopathy, health tips, and natural healing</p>
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>></span>
+                    <a href="#media">Media</a>
+                    <span>></span>
+                    <span>Videos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Video -->
+    <section style="padding: 100px 0 50px;">
+        <div class="container">
+            <div class="featured-video">
+                <div class="featured-video-content">
+                    <div class="featured-thumbnail" onclick="openVideoModal('featured')">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Featured Video">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="video-duration">15:30</div>
+                    </div>
+                    <div class="featured-info">
+                        <h2>Complete Guide to PCOS Treatment</h2>
+                        <p>Dr. Sharma explains the comprehensive approach to treating PCOS naturally with homeopathy, covering symptoms, causes, and effective remedies.</p>
+                        <button class="watch-now-btn" onclick="openVideoModal('featured')">
+                            <i class="fas fa-play"></i> Watch Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search & Categories -->
+    <section style="padding: 0 0 50px;">
+        <div class="container">
+            <div class="search-box">
+                <input type="text" id="videoSearch" placeholder="Search videos...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+            
+            <div class="video-categories">
+                <div class="category-filter active" data-category="all">All Videos</div>
+                <div class="category-filter" data-category="treatments">Treatments</div>
+                <div class="category-filter" data-category="prevention">Prevention</div>
+                <div class="category-filter" data-category="lifestyle">Lifestyle</div>
+                <div class="category-filter" data-category="testimonials">Success Stories</div>
+                <div class="category-filter" data-category="education">Education</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Grid -->
+    <section style="padding: 0 0 100px;">
+        <div class="container">
+            <div class="video-grid" id="videosContainer">
+                <!-- Videos will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeVideoModal()">&times;</span>
+            <div class="modal-video" id="modalVideo">
+                <iframe width="100%" height="100%" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-contact-info">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> <strong>Corporate Address :</strong><br> C-79, C-Block, Sector-2,<br> Noida, Uttar Pradesh – 201301</li>
+                        <li><i class="fas fa-phone-alt"></i> <strong>Call Us :</strong> +91 - 7386521920</li>
+                        <li><i class="fas fa-envelope"></i> <strong>Mail Us :</strong> <a href="mailto:info@homoeoamigo.com">Click to mail us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-treatments">
+                    <h3>Treatments</h3>
+                    <div class="treatment-columns">
+                        <ul>
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p><strong>Disclaimer :</strong> The information, response, advice provided or medicines prescribed by Homoeo Amigo to any query posted/mailed is solely on the basis of the information provided by you and is meant for general information only. Homoeo Amigo does not allow copying, cloning of its webpages and content and it will follow the legal notifications to protect its professional engagement.</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 <span class="brand-highlight">Bhargava Phytolab Pvt Ltd</span>. All Right Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // Video data
+        const videos = [
+            {
+                id: 1,
+                title: "Natural Asthma Treatment with Homeopathy",
+                description: "Learn how homeopathy can effectively treat asthma symptoms and improve breathing naturally.",
+                category: "treatments",
+                duration: "12:45",
+                views: "15.2K",
+                date: "2024-12-10",
+                thumbnail: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400",
+                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: 2,
+                title: "Boosting Immunity in Children",
+                description: "Essential tips to naturally strengthen your child's immune system using homeopathic remedies.",
+                category: "prevention",
+                duration: "8:30",
+                views: "22.1K",
+                date: "2024-12-08",
+                thumbnail: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400",
+                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: 3,
+                title: "Hair Fall Solutions - Success Story",
+                description: "Real patient shares her journey of overcoming severe hair fall with homeopathic treatment.",
+                category: "testimonials",
+                duration: "6:15",
+                views: "18.7K",
+                date: "2024-12-05",
+                thumbnail: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400",
+                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: 4,
+                title: "Healthy Lifestyle Tips for Better Digestion",
+                description: "Simple lifestyle changes that can improve your digestive health naturally.",
+                category: "lifestyle",
+                duration: "10:20",
+                views: "12.3K",
+                date: "2024-12-03",
+                thumbnail: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?w=400",
+                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: 5,
+                title: "Understanding Homeopathic Principles",
+                description: "Dr. Patel explains the fundamental principles of homeopathy and how it works.",
+                category: "education",
+                duration: "14:55",
+                views: "25.8K",
+                date: "2024-12-01",
+                thumbnail: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400",
+                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            },
+            {
+                id: 6,
+                title: "Arthritis Pain Relief Naturally",
+                description: "Effective homeopathic remedies for managing arthritis pain and improving joint mobility.",
+                category: "treatments",
+                duration: "11:40",
+                views: "19.4K",
+                date: "2024-11-28",
+                thumbnail: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=400",
+                videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+            }
+        ];
+
+        let currentCategory = 'all';
+        let filteredVideos = videos;
+
+        // Render videos
+        function renderVideos() {
+            const container = document.getElementById('videosContainer');
+            container.innerHTML = '';
+
+            filteredVideos.forEach(video => {
+                const videoCard = `
+                    <div class="video-card" onclick="openVideoModal(${video.id})">
+                        <div class="video-thumbnail">
+                            <img src="${video.thumbnail}" alt="${video.title}">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="video-duration">${video.duration}</div>
+                        </div>
+                        <div class="video-content">
+                            <div class="video-category">${video.category}</div>
+                            <h3 class="video-title">${video.title}</h3>
+                            <p class="video-description">${video.description}</p>
+                            <div class="video-meta">
+                                <div class="video-views">
+                                    <i class="fas fa-eye"></i>
+                                    <span>${video.views} views</span>
+                                </div>
+                                <div class="video-date">${formatDate(video.date)}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += videoCard;
+            });
+        }
+
+        // Format date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        // Filter videos by category
+        function filterByCategory(category) {
+            currentCategory = category;
+            filteredVideos = category === 'all' ? videos : videos.filter(v => v.category === category);
+            renderVideos();
+
+            // Update active category
+            document.querySelectorAll('.category-filter').forEach(filter => {
+                filter.classList.remove('active');
+            });
+            document.querySelector(`[data-category="${category}"]`).classList.add('active');
+        }
+
+        // Search videos
+        function searchVideos(query) {
+            const searchTerm = query.toLowerCase();
+            filteredVideos = videos.filter(video => 
+                video.title.toLowerCase().includes(searchTerm) ||
+                video.description.toLowerCase().includes(searchTerm) ||
+                video.category.toLowerCase().includes(searchTerm)
+            );
+
+            if (currentCategory !== 'all') {
+                filteredVideos = filteredVideos.filter(v => v.category === currentCategory);
+            }
+
+            renderVideos();
+        }
+
+        // Open video modal
+        function openVideoModal(videoId) {
+            const modal = document.getElementById('videoModal');
+            const iframe = modal.querySelector('iframe');
+            
+            if (videoId === 'featured') {
+                iframe.src = "https://www.youtube.com/embed/dQw4w9WgXcQ";
+            } else {
+                const video = videos.find(v => v.id === videoId);
+                iframe.src = video.videoUrl;
+            }
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close video modal
+        function closeVideoModal() {
+            const modal = document.getElementById('videoModal');
+            const iframe = modal.querySelector('iframe');
+            iframe.src = '';
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            renderVideos();
+
+            // Category filters
+            document.querySelectorAll('.category-filter').forEach(filter => {
+                filter.addEventListener('click', function() {
+                    filterByCategory(this.dataset.category);
+                });
+            });
+
+            // Search functionality
+            const searchInput = document.getElementById('videoSearch');
+            searchInput.addEventListener('input', function() {
+                searchVideos(this.value);
+            });
+
+            // Close modal on outside click
+            document.getElementById('videoModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeVideoModal();
+                }
+            });
+
+            // Close modal on escape key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeVideoModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

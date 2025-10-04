@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions - Homoeo Amigo</title>
+    <meta name="description" content="Find answers to common questions about homeopathic treatments, consultation process, and our services at Homoeo Amigo.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .faq-item {
+            background: white;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 25px 30px;
+            background: var(--light-bg);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text-color);
+            transition: var(--transition);
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+        .faq-question:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+        .faq-question.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        .faq-icon {
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+        .faq-question.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .faq-answer.active {
+            padding: 30px;
+            max-height: 500px;
+        }
+        .faq-answer p {
+            color: var(--light-text);
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .faq-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+        .category-tab {
+            padding: 15px 25px;
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .category-tab:hover, .category-tab.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="logo.webp" alt="Homoeo Amigo Logo" class="logo-img">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT US</a></li>
+                    <li class="dropdown">
+                        <a href="#treatments" class="dropdown-toggle">TREATMENTS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#homoeopathy" class="dropdown-toggle">HOMOEOPATHY <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                            <li><a href="faqs.html" class="active">FAQs</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#media" class="dropdown-toggle">MEDIA <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="press-releases.html">Press Releases</a></li>
+                            <li><a href="videos.html">Videos</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#contact">CONTACT US</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#consultation" class="btn btn-primary">Doctor Consultation</a>
+                    <a href="#chat" class="btn btn-outline">Chat with Experts</a>
+                </div>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1>Frequently Asked Questions</h1>
+                <p>Find answers to common questions about homeopathy and our treatments</p>
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>></span>
+                    <a href="#homoeopathy">Homoeopathy</a>
+                    <span>></span>
+                    <span>FAQs</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Categories -->
+    <section style="padding: 100px 0 50px;">
+        <div class="container">
+            <div class="faq-categories">
+                <div class="category-tab active" data-category="general">General Questions</div>
+                <div class="category-tab" data-category="treatment">Treatment Process</div>
+                <div class="category-tab" data-category="consultation">Consultation</div>
+                <div class="category-tab" data-category="medicine">Medicines</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section style="padding: 0 0 100px;">
+        <div class="container">
+            <div class="faq-container">
+                
+                <!-- General Questions -->
+                <div class="faq-category" data-category="general">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What is homeopathy?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Homeopathy is a natural system of medicine founded over 200 years ago by Dr. Samuel Hahnemann. It is based on the principle of "like cures like" - using highly diluted substances to stimulate the body's natural healing response.</p>
+                            <p>Homeopathic medicines are prepared from natural sources like plants, minerals, and animal products, making them safe and free from side effects.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Is homeopathy safe for children and pregnant women?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, homeopathy is completely safe for people of all ages, including infants, children, pregnant and breastfeeding mothers, and elderly patients.</p>
+                            <p>Since homeopathic medicines are highly diluted and made from natural substances, they don't cause any harmful side effects or interfere with other medications.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How long does homeopathic treatment take to work?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>The response time varies depending on the condition and individual. For acute conditions, improvement can be seen within hours to days. For chronic conditions, it may take weeks to months for significant improvement.</p>
+                            <p>Factors like duration of illness, severity, age, and general health condition influence the healing time.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Treatment Process -->
+                <div class="faq-category" data-category="treatment" style="display: none;">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How does the treatment process work?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Our treatment process begins with a detailed consultation where we understand your complete medical history, symptoms, lifestyle, and emotional state.</p>
+                            <p>Based on this comprehensive evaluation, we select the most suitable homeopathic remedy that matches your unique symptom picture. Regular follow-ups help us monitor progress and adjust treatment as needed.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Can I take homeopathic medicines with other medications?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, homeopathic medicines can be safely taken alongside conventional medications as they don't cause any drug interactions.</p>
+                            <p>However, it's important to inform your homeopathic doctor about all medications you're currently taking for better treatment planning.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What conditions can be treated with homeopathy?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Homeopathy can effectively treat a wide range of conditions including allergies, asthma, skin disorders, digestive problems, hormonal imbalances, joint pain, mental health issues, and chronic diseases.</p>
+                            <p>It's particularly effective for conditions that tend to recur frequently or those that haven't responded well to conventional treatment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consultation -->
+                <div class="faq-category" data-category="consultation" style="display: none;">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How long is the first consultation?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>The first consultation typically lasts 60-90 minutes. This detailed session helps us understand your complete health picture including physical symptoms, emotional state, lifestyle, and medical history.</p>
+                            <p>Follow-up consultations are usually shorter, lasting 30-45 minutes.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Do you offer online consultations?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Yes, we provide online consultations for your convenience. You can book video consultations through our website and receive the same quality of care from the comfort of your home.</p>
+                            <p>Medicines can be delivered to your doorstep following the consultation.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What should I bring to my consultation?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Please bring all your medical reports, previous prescriptions, and a list of current medications. Also, prepare a detailed description of your symptoms and how they affect your daily life.</p>
+                            <p>The more information you provide, the better we can understand your case and provide effective treatment.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medicines -->
+                <div class="faq-category" data-category="medicine" style="display: none;">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How should I take homeopathic medicines?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Homeopathic medicines are usually taken on an empty stomach, at least 30 minutes before or after meals. Avoid strong flavors like mint, coffee, or camphor around the time of taking medicine.</p>
+                            <p>Follow the specific dosage and timing instructions provided by your doctor for best results.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Are there any dietary restrictions during treatment?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Generally, there are no strict dietary restrictions. However, it's advisable to avoid excessive coffee, alcohol, and very spicy foods as they may interfere with the medicine's action.</p>
+                            <p>Your doctor will provide specific dietary guidelines if needed based on your condition.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What if I miss a dose?
+                            <i class="fas fa-chevron-down faq-icon"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>If you miss a dose, take it as soon as you remember. However, if it's almost time for the next dose, skip the missed dose and continue with your regular schedule.</p>
+                            <p>Don't double the dose to make up for the missed one. Contact your doctor if you have concerns about missed doses.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="treatment-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Still Have Questions?</h2>
+                <p>Our expert doctors are here to help. Book a consultation to get personalized answers to your health concerns.</p>
+                <div class="cta-buttons">
+                    <a href="#consultation" class="btn btn-primary">Book Consultation</a>
+                    <a href="#chat" class="btn btn-outline">Chat with Expert</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-contact-info">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> <strong>Corporate Address :</strong><br> C-79, C-Block, Sector-2,<br> Noida, Uttar Pradesh – 201301</li>
+                        <li><i class="fas fa-phone-alt"></i> <strong>Call Us :</strong> +91 - 7386521920</li>
+                        <li><i class="fas fa-envelope"></i> <strong>Mail Us :</strong> <a href="mailto:info@homoeoamigo.com">Click to mail us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-treatments">
+                    <h3>Treatments</h3>
+                    <div class="treatment-columns">
+                        <ul>
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p><strong>Disclaimer :</strong> The information, response, advice provided or medicines prescribed by Homoeo Amigo to any query posted/mailed is solely on the basis of the information provided by you and is meant for general information only. Homoeo Amigo does not allow copying, cloning of its webpages and content and it will follow the legal notifications to protect its professional engagement.</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 <span class="brand-highlight">Bhargava Phytolab Pvt Ltd</span>. All Right Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const isActive = question.classList.contains('active');
+                
+                // Close all other FAQs
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                });
+                
+                // Toggle current FAQ
+                if (!isActive) {
+                    question.classList.add('active');
+                    question.nextElementSibling.classList.add('active');
+                }
+            });
+        });
+
+        // Category tabs functionality
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const category = tab.dataset.category;
+                
+                // Update active tab
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show corresponding FAQ category
+                document.querySelectorAll('.faq-category').forEach(cat => {
+                    cat.style.display = cat.dataset.category === category ? 'block' : 'none';
+                });
+                
+                // Close all open FAQs
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                    q.nextElementSibling.classList.remove('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

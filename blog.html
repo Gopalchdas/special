@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Blog - Homoeo Amigo</title>
+    <meta name="description" content="Read the latest articles on homeopathy, health tips, and wellness from Homoeo Amigo's expert doctors.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .blog-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .blog-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .blog-card:hover .blog-image img {
+            transform: scale(1.05);
+        }
+        .blog-date {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .blog-content {
+            padding: 25px;
+        }
+        .blog-category {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+        .blog-title:hover {
+            color: var(--primary-color);
+        }
+        .blog-excerpt {
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .blog-author {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+            font-size: 0.9rem;
+        }
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .author-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        .read-more:hover {
+            text-decoration: underline;
+        }
+        .blog-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        .category-filter {
+            padding: 8px 20px;
+            background: var(--light-bg);
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+        .category-filter:hover, .category-filter.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        .featured-post {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0d47a1 100%);
+            color: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            margin-bottom: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+        .featured-post::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+        .featured-content {
+            position: relative;
+            z-index: 2;
+        }
+        .featured-post h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .featured-post p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        .featured-post .btn {
+            background: white;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="logo.webp" alt="Homoeo Amigo Logo" class="logo-img">
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT US</a></li>
+                    <li class="dropdown">
+                        <a href="#treatments" class="dropdown-toggle">TREATMENTS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#homoeopathy" class="dropdown-toggle">HOMOEOPATHY <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                            <li><a href="faqs.html">FAQs</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#media" class="dropdown-toggle">MEDIA <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="press-releases.html">Press Releases</a></li>
+                            <li><a href="videos.html">Videos</a></li>
+                            <li><a href="blog.html" class="active">Blog</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="index.html#contact">CONTACT US</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#consultation" class="btn btn-primary">Doctor Consultation</a>
+                    <a href="#chat" class="btn btn-outline">Chat with Experts</a>
+                </div>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <div class="page-header-content">
+                <h1>Health Blog</h1>
+                <p>Expert insights on homeopathy, wellness tips, and natural healing</p>
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a>
+                    <span>></span>
+                    <a href="#media">Media</a>
+                    <span>></span>
+                    <span>Blog</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section style="padding: 100px 0 50px;">
+        <div class="container">
+            <div class="featured-post">
+                <div class="featured-content">
+                    <h2>Natural Immunity Boosting During Seasonal Changes</h2>
+                    <p>Learn how homeopathic remedies can help strengthen your immune system naturally as seasons change, protecting you from common illnesses.</p>
+                    <a href="#" class="btn">Read Full Article</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Categories -->
+    <section style="padding: 0 0 50px;">
+        <div class="container">
+            <div class="blog-categories">
+                <div class="category-filter active">All Articles</div>
+                <div class="category-filter">Women's Health</div>
+                <div class="category-filter">Child Care</div>
+                <div class="category-filter">Respiratory Health</div>
+                <div class="category-filter">Skin Care</div>
+                <div class="category-filter">Lifestyle</div>
+                <div class="category-filter">Prevention</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts -->
+    <section style="padding: 0 0 100px;">
+        <div class="container">
+            <div class="blog-grid">
+                <!-- Blog Post 1 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="PCOS Management">
+                        <div class="blog-date">Dec 15, 2024</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Women's Health</div>
+                        <h3 class="blog-title">Natural PCOS Management: A Holistic Approach</h3>
+                        <p class="blog-excerpt">Discover how homeopathic treatment can help manage PCOS symptoms naturally, addressing hormonal imbalance from the root cause...</p>
+                        <div class="blog-author">
+                            <div class="author-info">
+                                <div class="author-avatar">DR</div>
+                                <span>Dr. Sharma</span>
+                            </div>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Child Health">
+                        <div class="blog-date">Dec 12, 2024</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Child Care</div>
+                        <h3 class="blog-title">Boosting Your Child's Immunity Naturally</h3>
+                        <p class="blog-excerpt">Learn effective homeopathic remedies and lifestyle changes to strengthen your child's immune system and prevent frequent infections...</p>
+                        <div class="blog-author">
+                            <div class="author-info">
+                                <div class="author-avatar">DR</div>
+                                <span>Dr. Patel</span>
+                            </div>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Respiratory Health">
+                        <div class="blog-date">Dec 10, 2024</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Respiratory Health</div>
+                        <h3 class="blog-title">Managing Asthma in Winter: Homeopathic Solutions</h3>
+                        <p class="blog-excerpt">Winter can be challenging for asthma patients. Explore natural homeopathic remedies to manage symptoms and breathe easier...</p>
+                        <div class="blog-author">
+                            <div class="author-info">
+                                <div class="author-avatar">DR</div>
+                                <span>Dr. Kumar</span>
+                            </div>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 4 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Skin Care">
+                        <div class="blog-date">Dec 8, 2024</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Skin Care</div>
+                        <h3 class="blog-title">Natural Acne Treatment: Clear Skin from Within</h3>
+                        <p class="blog-excerpt">Discover how homeopathy treats acne by addressing internal imbalances, providing long-lasting clear skin solutions...</p>
+                        <div class="blog-author">
+                            <div class="author-info">
+                                <div class="author-avatar">DR</div>
+                                <span>Dr. Singh</span>
+                            </div>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 5 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Lifestyle">
+                        <div class="blog-date">Dec 5, 2024</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Lifestyle</div>
+                        <h3 class="blog-title">Stress Management Through Homeopathy</h3>
+                        <p class="blog-excerpt">Learn how homeopathic remedies can help manage stress, anxiety, and improve mental well-being naturally...</p>
+                        <div class="blog-author">
+                            <div class="author-info">
+                                <div class="author-avatar">DR</div>
+                                <span>Dr. Mehta</span>
+                            </div>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Blog Post 6 -->
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Prevention">
+                        <div class="blog-date">Dec 3, 2024</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-category">Prevention</div>
+                        <h3 class="blog-title">Preventing Seasonal Allergies Naturally</h3>
+                        <p class="blog-excerpt">Prepare your body for allergy season with natural homeopathic preventive measures and lifestyle changes...</p>
+                        <div class="blog-author">
+                            <div class="author-info">
+                                <div class="author-avatar">DR</div>
+                                <span>Dr. Gupta</span>
+                            </div>
+                            <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup -->
+    <section class="treatment-cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Stay Updated with Health Tips</h2>
+                <p>Subscribe to our newsletter to receive the latest articles on natural health and homeopathy directly in your inbox.</p>
+                <div class="cta-buttons">
+                    <a href="#consultation" class="btn btn-primary">Subscribe Now</a>
+                    <a href="#chat" class="btn btn-outline">Ask Our Experts</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-contact-info">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> <strong>Corporate Address :</strong><br> C-79, C-Block, Sector-2,<br> Noida, Uttar Pradesh – 201301</li>
+                        <li><i class="fas fa-phone-alt"></i> <strong>Call Us :</strong> +91 - 7386521920</li>
+                        <li><i class="fas fa-envelope"></i> <strong>Mail Us :</strong> <a href="mailto:info@homoeoamigo.com">Click to mail us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="index.html#contact">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+                <div class="footer-treatments">
+                    <h3>Treatments</h3>
+                    <div class="treatment-columns">
+                        <ul>
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p><strong>Disclaimer :</strong> The information, response, advice provided or medicines prescribed by Homoeo Amigo to any query posted/mailed is solely on the basis of the information provided by you and is meant for general information only. Homoeo Amigo does not allow copying, cloning of its webpages and content and it will follow the legal notifications to protect its professional engagement.</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 <span class="brand-highlight">Bhargava Phytolab Pvt Ltd</span>. All Right Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // Category filter functionality
+        document.querySelectorAll('.category-filter').forEach(filter => {
+            filter.addEventListener('click', () => {
+                // Remove active class from all filters
+                document.querySelectorAll('.category-filter').forEach(f => f.classList.remove('active'));
+                // Add active class to clicked filter
+                filter.classList.add('active');
+                
+                // Here you would typically filter the blog posts
+                // For now, we'll just show all posts
+            });
+        });
+    </script>
+</body>
+</html>

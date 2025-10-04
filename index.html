@@ -1,52 +1,763 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>तुम्हारे लिए कुछ खास 💕</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Homoeo Amigo - Natural Healing, Expert Care</title>
+    <meta name="description" content="Experience the power of natural healing with Homoeo Amigo. Expert homeopathic treatments for PCOS, asthma, arthritis, and more. Book your consultation today.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
+        /* Hero Section Styles */
+        .hero {
+            background: linear-gradient(135deg, rgba(13, 92, 157, 0.9), rgba(21, 101, 192, 0.8)), url('https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             min-height: 100vh;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 50%, #fecfef 75%, #ff9a9e 100%);
-            background-size: 400% 400%;
-            animation: gradientShift 8s ease infinite;
             display: flex;
-            justify-content: center;
             align-items: center;
+            position: relative;
             overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(13, 92, 157, 0.1);
+            backdrop-filter: blur(0.5px);
+        }
+        
+        /* Slider Styles */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(100%);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .hero-slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+        
+        .hero-slide.slide-out-left {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        
+        .hero-slide.slide-in-right {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        
+        /* Navigation Dots */
+        .slider-navigation {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 5;
+        }
+        
+        .slider-nav-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+        
+        .slider-nav-btn.active {
+            background: #4CAF50;
+            transform: scale(1.2);
+        }
+        
+        /* Slider Arrows */
+        .slider-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+        }
+        
+        .slider-arrow:hover {
+            background: rgba(255, 255, 255, 0.4);
+            opacity: 1;
+        }
+        
+        .slider-prev {
+            left: 20px;
+        }
+        
+        .slider-next {
+            right: 20px;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            text-align: left;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s ease 0.3s;
+        }
+        
+        .hero-slide.active .hero-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 20px;
+            border-radius: 50px;
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 30px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease 0.4s;
+        }
+        
+        .hero-slide.active .hero-badge {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .hero-badge i {
+            color: #4CAF50;
+            font-size: 1.1rem;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 25px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.7s ease 0.5s;
+        }
+        
+        .hero-slide.active h1 {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .hero-highlight {
+            background: linear-gradient(45deg, #4CAF50, #81C784);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
             position: relative;
         }
-
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            margin-bottom: 40px;
+            transform: translateY(25px);
+            opacity: 0;
+            transition: all 0.6s ease 0.6s;
         }
-
-        .container {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 240, 245, 0.9));
-            padding: 40px;
-            border-radius: 30px;
-            box-shadow: 0 25px 80px rgba(255, 105, 180, 0.3), 0 0 0 1px rgba(255, 192, 203, 0.5);
-            max-width: 90%;
-            width: 500px;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            animation: slideUp 0.8s ease-out;
-            border: 2px solid rgba(255, 182, 193, 0.3);
+        
+        .hero-slide.active p {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s ease 0.7s;
+        }
+        
+        .hero-slide.active .hero-buttons {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .hero-btn {
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-btn-primary {
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
+            color: white;
+            border: none;
+        }
+        
+        .hero-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
+        }
+        
+        .hero-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
             backdrop-filter: blur(10px);
         }
-
-        @keyframes slideUp {
+        
+        .hero-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 80px 0;
+            margin-top: -50px;
+            position: relative;
+            z-index: 3;
+            border-radius: 30px 30px 0 0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--primary-color), #1565c0);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--light-text);
+            font-weight: 500;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fffe, #e8f5e8);
+        }
+        
+        .features-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 80px;
+        }
+        
+        .features-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .features-header p {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(45deg, #4CAF50, var(--primary-color));
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .feature-card:hover::before {
+            width: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, rgba(76, 175, 80, 0.1), rgba(13, 92, 157, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+        
+        .feature-card p {
+            color: var(--light-text);
+            line-height: 1.6;
+        }
+        
+        /* Treatments Section */
+        .treatments {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .treatments-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+        
+        .treatments-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+        
+        .treatments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .treatment-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), #4CAF50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+        }
+        
+        .treatment-content {
+            padding: 30px;
+        }
+        
+        .treatment-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+        
+        .treatment-card p {
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .treatment-link {
+            color: var(--primary-color);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .treatment-link:hover {
+            color: #4CAF50;
+            transform: translateX(5px);
+        }
+        
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--primary-color), #1565c0);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+        
+        .cta-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .cta h2 {
+            font-size: 2.8rem;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .cta p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .cta-btn {
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cta-btn-primary {
+            background: linear-gradient(45deg, #4CAF50, #66BB6A);
+            color: white;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+        
+        .cta-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(76, 175, 80, 0.4);
+        }
+        
+        .cta-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        .cta-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fffe, #e8f5e8);
+        }
+        
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: start;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .contact-info h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .contact-info p {
+            font-size: 1.2rem;
+            color: var(--light-text);
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+        
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), #4CAF50);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(13, 92, 157, 0.3);
+        }
+        
+        .contact-text h4 {
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .contact-text p {
+            color: var(--light-text);
+            margin: 0;
+            line-height: 1.5;
+            font-size: 1rem;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 50px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary-color), #4CAF50);
+        }
+        
+        .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+        
+        .contact-form .form-subtitle {
+            color: var(--light-text);
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            box-sizing: border-box;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(13, 92, 157, 0.1);
+            background: white;
+        }
+        
+        .form-control:hover {
+            border-color: #d1d9e6;
+            background: white;
+        }
+        
+        .form-control textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+        
+        .form-control select {
+            cursor: pointer;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 18px 30px;
+            background: linear-gradient(45deg, var(--primary-color), #1565c0);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-transform: none;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(13, 92, 157, 0.4);
+            background: linear-gradient(45deg, #1565c0, var(--primary-color));
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -56,746 +767,752 @@
                 transform: translateY(0);
             }
         }
-
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            color: #ff1493;
-            margin-bottom: 20px;
-            animation: heartbeat 2s infinite;
-            text-shadow: 0 2px 4px rgba(255, 20, 147, 0.3);
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .question {
-            font-size: 1.2rem;
-            color: #6b2c5a;
-            margin: 30px 0;
-            line-height: 1.6;
-            font-weight: 400;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-        }
-
-        .btn-container {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-
-        button {
-            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #ffb3d1 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: 600;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 25px rgba(255, 107, 157, 0.4);
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 15px 35px rgba(255, 107, 157, 0.6);
-            background: linear-gradient(135deg, #ff5a8a 0%, #ff7ba7 50%, #ffa8c5 100%);
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        .no-btn {
-            background: linear-gradient(135deg, #d4a5a5 0%, #e8b4b4 100%);
-            box-shadow: 0 8px 25px rgba(212, 165, 165, 0.4);
-        }
-
-        .no-btn:hover {
-            box-shadow: 0 15px 35px rgba(212, 165, 165, 0.6);
-            background: linear-gradient(135deg, #d19a9a 0%, #e5a8a8 100%);
-        }
-
-        .no-btn:disabled,
-        .no-btn.disabled {
-            opacity: 0.3 !important;
-            cursor: not-allowed !important;
-            background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%) !important;
-            color: #999 !important;
-            box-shadow: none !important;
-            transform: none !important;
-        }
-
-        .final-yes {
-            background: linear-gradient(135deg, #ff1493 0%, #ff69b4 50%, #ffb6c1 100%);
-            animation: pulse 1.5s infinite;
-            box-shadow: 0 12px 30px rgba(255, 20, 147, 0.5);
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 20, 147, 0.4); }
-            50% { box-shadow: 0 0 0 15px rgba(255, 20, 147, 0); }
-        }
-
-        /* Floating Hearts Background */
-        .heart {
-            position: absolute;
-            color: rgba(255, 105, 180, 0.4);
-            font-size: 20px;
-            animation: float 6s infinite ease-in-out;
-            text-shadow: 0 0 10px rgba(255, 105, 180, 0.3);
-        }
-
+        
         @keyframes float {
-            0%, 100% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
+            from {
+                transform: translateX(-50%);
             }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
+            to {
+                transform: translateX(-40%);
             }
         }
-
-        .hearts-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        /* Confetti */
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #f5576c;
-            position: absolute;
-            animation: confetti-fall 3s linear;
-        }
-
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .emoji {
-            font-size: 2rem;
-            margin: 20px 0;
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .audio-notice {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            color: #666;
-            z-index: 100;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .audio-notice:hover {
-            background: rgba(255, 255, 255, 1);
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 30px 20px;
-                width: 95%;
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
             }
             
-            h1 {
-                font-size: 2rem;
+            .hero p {
+                font-size: 1.1rem;
             }
             
-            .question {
-                font-size: 1rem;
-            }
-            
-            button {
-                padding: 12px 30px;
-                font-size: 1rem;
-            }
-            
-            .btn-container {
+            .hero-buttons {
                 flex-direction: column;
-                gap: 15px;
+                align-items: stretch;
             }
             
-            .audio-notice {
-                bottom: 10px;
-                right: 10px;
-                font-size: 0.8rem;
-            }
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 182, 193, 0.3);
-            border-radius: 3px;
-            margin-bottom: 30px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(255, 105, 180, 0.2);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff69b4, #ff1493, #ffb6c1);
-            border-radius: 3px;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
-        }
-
-        /* Greeting Card Styles */
-        .card-container {
-            perspective: 1000px;
-            margin: 20px auto;
-            width: 400px;
-            height: 350px;
-        }
-
-        .greeting-card {
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 2s ease-in-out;
-            cursor: pointer;
-        }
-
-        .greeting-card.opened {
-            transform: rotateY(-180deg);
-        }
-
-        .card-front, .card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(255, 20, 147, 0.3);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .card-front {
-            background: linear-gradient(145deg, #ff69b4, #ff1493);
-            color: white;
-            transform: rotateY(0deg);
-        }
-
-        .card-back {
-            background: linear-gradient(145deg, #fff0f5, #ffe4e1);
-            color: #d63384;
-            transform: rotateY(180deg);
-            border: 3px solid #ff69b4;
-            overflow-y: auto;
-        }
-
-        .card-front h2 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-front p {
-            font-size: 1.1rem;
-            margin-bottom: 20px;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-        }
-
-        .card-back h3 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #ff1493;
-            position: relative;
-            z-index: 2;
-        }
-
-        .card-back .message-content {
-            position: relative;
-            z-index: 1;
-            margin-top: 10px;
-        }
-
-        .card-back p {
-            font-size: 0.9rem;
-            line-height: 1.5;
-            margin-bottom: 8px;
-            color: #6b2c5a;
-        }
-
-        .card-back .signature {
-            font-family: 'Dancing Script', cursive;
-            font-size: 1.3rem;
-            color: #ff1493;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        .open-instruction {
-            margin-top: 20px;
-            font-size: 1rem;
-            color: #ff69b4;
-            font-style: italic;
-            animation: pulse 2s infinite;
-        }
-
-        .card-hearts {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 1.5rem;
-            animation: bounce 2s infinite;
-        }
-
-        .card-sparkles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #ffd700;
-            border-radius: 50%;
-            animation: sparkle 2s infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        @media (max-width: 600px) {
-            .card-container {
-                width: 90%;
-                height: 300px;
+            .hero-btn {
+                text-align: center;
+                justify-content: center;
             }
             
-            .card-front h2, .card-back h3 {
-                font-size: 1.8rem;
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
             
-            .card-front p, .card-back p {
-                font-size: 0.85rem;
+            .features-grid,
+            .treatments-grid {
+                grid-template-columns: 1fr;
             }
             
-            .card-back .message-content {
-                margin-top: 5px;
+            .cta h2 {
+                font-size: 2.2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
             }
         }
     </style>
 </head>
 <body>
-    <div class="hearts-container" id="heartsContainer"></div>
-    
-    <div class="container" id="mainContainer">
-        <!-- Welcome Screen -->
-        <div id="welcome" class="screen">
-            
-            <h1>Hey Sweetheart (Simmi), I made something special for you 💕</h1>
-            <div class="emoji">💝</div>
-            <p class="question">गहरी सांस लो और जब तैयार हो तो "शुरू करो" पर क्लिक करो...</p>
-            <button onclick="startJourney()">शुरू करो</button>
-        </div>
 
-        <!-- Question 1 -->
-        <div id="question1" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 14%"></div>
-            </div>
-            <h1>Question 1 / 7 🌹</h1>
-            <p class="question">क्या जब हम बात करते हैं तो तुम्हें थोड़ा और खुश महसूस होता है? 😊</p>
-            <div class="btn-container">
-                <button onclick="nextQuestion(2)">हाँ 💕</button>
-                <button class="no-btn" onclick="handleNo()">नहीं</button>
-            </div>
-        </div>
 
-        <!-- Question 2 -->
-        <div id="question2" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 28%"></div>
-            </div>
-            <h1>Question 2 / 7 🌹</h1>
-            <p class="question">क्या कभी चुपके से मेरे बारे में सोचते हुए मुस्कुरा देती हो? 🙈</p>
-            <div class="btn-container">
-                <button onclick="nextQuestion(3)">हाँ 💕</button>
-                <button class="no-btn" onclick="handleNo()">नहीं</button>
-            </div>
+<!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="logo.webp" alt="Homoeo Amigo Logo" class="logo-img">
+                 
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home" class="active">HOME</a></li>
+                    <li><a href="about.html">ABOUT US</a></li>
+                    <li class="dropdown">
+                        <a href="#treatments" class="dropdown-toggle">TREATMENTS <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#homoeopathy" class="dropdown-toggle">HOMOEOPATHY <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                            <li><a href="faqs.html">FAQs</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#media" class="dropdown-toggle">MEDIA <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="press-releases.html">Press Releases</a></li>
+                            <li><a href="videos.html">Videos</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#contact">CONTACT US</a></li>
+                </ul>
+                <div class="nav-buttons">
+                    <a href="#consultation" class="btn btn-primary">Doctor Consultation</a>
+                    <a href="#chat" class="btn btn-outline">Chat with Experts</a>
+                </div>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
         </div>
+    </header>
 
-        <!-- Question 3 -->
-        <div id="question3" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 42%"></div>
-            </div>
-            <h1>Question 3 / 7 🌹</h1>
-            <p class="question">अगर मैं कहूँ कि तुम मेरे लिए खास हो, तो क्या तुम भरोसा करोगी? 💖</p>
-            <div class="btn-container">
-                <button onclick="nextQuestion(4)">हाँ 💕</button>
-                <button class="no-btn" onclick="handleNo()">नहीं</button>
-            </div>
-        </div>
-
-        <!-- Question 4 -->
-        <div id="question4" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 56%"></div>
-            </div>
-            <h1>Question 4 / 7 🌹</h1>
-            <p class="question">क्या तुम्हें लगता है हमारी बातें तुम्हारे दिन का सबसे अच्छा हिस्सा हैं? ✨</p>
-            <div class="btn-container">
-                <button onclick="nextQuestion(5)">हाँ 💕</button>
-                <button class="no-btn" onclick="handleNo()">नहीं</button>
-            </div>
-        </div>
-
-        <!-- Question 5 -->
-        <div id="question5" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 70%"></div>
-            </div>
-            <h1>Question 5 / 7 🌹</h1>
-            <p class="question">अगर मैं तुम्हारा हाथ पकड़ लूँ, तो क्या तुम उसे हमेशा थामे रखोगी? 🤝💕</p>
-            <div class="btn-container">
-                <button onclick="nextQuestion(6)">हाँ 💕</button>
-                <button class="no-btn" onclick="handleNo()">नहीं</button>
-            </div>
-        </div>
-
-        <!-- Question 6 -->
-        <div id="question6" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 84%"></div>
-            </div>
-            <h1>Question 6 / 7 🌹</h1>
-            <p class="question">क्या तुम्हें लगता है कि हमारा रिश्ता सिर्फ दोस्ती से कहीं ज़्यादा है? 💫</p>
-            <div class="btn-container">
-                <button onclick="nextQuestion(7)">हाँ 💕</button>
-                <button class="no-btn" onclick="handleNo()">नहीं</button>
-            </div>
-        </div>
-
-        <!-- Final Question -->
-        <div id="finalQuestion" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
-            </div>
-            <h1>🥰 आख़िरी सवाल</h1>
-            <p class="question">अब सबसे ज़रूरी सवाल…<br><br>
-                <strong>क्या तुम इस दोस्ती को हमेशा के लिए रिश्ते में बदलना चाहोगी?</strong></p>
-            <div class="emoji">💍</div>
-            <div class="btn-container">
-                <button class="final-yes" onclick="celebrate()">हाँ 💕</button>
-                <button class="final-yes" onclick="celebrate()">हमेशा 😍</button>
-            </div>
-        </div>
-
-        <!-- Celebration Screen -->
-        <div id="celebration" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
-            </div>
-            <h1>Yay! This is the beginning of something beautiful 💖</h1>
-            <div class="emoji">🎉💕🎊</div>
-            <p class="question">तुमने मुझे दुनिया का सबसे खुश इंसान बना दिया!</p>
-            <div class="emoji">👫</div>
-            <button onclick="showGreetingCard()" style="margin-top: 20px;">अपना खास कार्ड खोलो 💌</button>
-        </div>
-
-        <!-- Greeting Card Screen -->
-        <div id="greetingCard" class="screen hidden">
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: 100%"></div>
-            </div>
-            <h1>तुम्हारे लिए खास कार्ड 💕</h1>
-            <div class="card-container">
-                <div class="greeting-card" id="greetingCardElement" onclick="openCard()">
-                    <div class="card-front">
-                        <div class="card-hearts">💕</div>
-                        <div class="card-sparkles" id="cardSparkles"></div>
-                        <h2>मेरी जान के लिए</h2>
-                        <p>क्लिक करके अपना सरप्राइज़ देखो! ✨</p>
-                        <div class="open-instruction">कार्ड को छूकर जादू देखो 💫</div>
-                    </div>
-                    <div class="card-back">
-                        <h3>मेरी प्यारी सिम्मी 💖</h3>
-                        <div class="message-content">
-                            <p>तुम्हारे साथ हर पल एक खूबसूरत सपना लगता है जिससे मैं कभी जागना नहीं चाहता। तुम्हारी मुस्कान मेरी दुनिया रोशन कर देती है और तुम्हारी हँसी सबसे प्यारी धुन है।</p>
-                            <p>तुमने मुझे सच्चे प्यार पर यक़ीन दिलाया है। मैं वादा करता हूँ कि हर दिन तुम्हें खुश रखूँगा और हर पल तुम्हारे साथ हँसी बाँटूँगा।</p>
-                            <p>हाँ कहने के लिए शुक्रिया 💕 अब से हमारी खूबसूरत सफर की शुरुआत है 🌟</p>
-                            <div class="signature">सिर्फ तुम्हारा,<br>हमेशा के लिए 💕</div>
+<!-- Hero Section with Slider -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-slider">
+                <!-- Slide 1 -->
+                <div class="hero-slide active">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-shield-alt"></i>
+                            Trusted by 50,000+ Patients
+                        </div>
+                        <h1>
+                            Discover the Power of <br>
+                            <span class="hero-highlight">Natural Healing</span>
+                        </h1>
+                        <p>Experience safe, effective homeopathic treatments tailored to your unique needs. Our expert doctors combine traditional wisdom with modern science to restore your health naturally.</p>
+                        <div class="hero-buttons">
+                            <a href="book-appointment.html" class="hero-btn hero-btn-primary">
+                                <i class="fas fa-calendar-check"></i>
+                                Book Consultation
+                            </a>
+                            <a href="#learn-more" class="hero-btn hero-btn-secondary">
+                                <i class="fas fa-play"></i>
+                                Learn More
+                            </a>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Slide 2 -->
+                <div class="hero-slide">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-certificate"></i>
+                            25+ Expert Homeopathy Doctors
+                        </div>
+                        <h1>
+                            Personalized Care for <br>
+                            <span class="hero-highlight">Your Wellbeing</span>
+                        </h1>
+                        <p>Our specialized homeopathic treatments address the root cause of your health concerns, not just the symptoms. Experience holistic healing that's tailored to your unique constitution.</p>
+                        <div class="hero-buttons">
+                            <a href="#treatments" class="hero-btn hero-btn-primary">
+                                <i class="fas fa-heartbeat"></i>
+                                Our Treatments
+                            </a>
+                            <a href="why-homeopathy.html" class="hero-btn hero-btn-secondary">
+                                <i class="fas fa-info-circle"></i>
+                                Why Homeopathy
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slide 3 -->
+                <div class="hero-slide">
+                    <div class="hero-content">
+                        <div class="hero-badge">
+                            <i class="fas fa-globe"></i>
+                            Online & In-Person Consultations
+                        </div>
+                        <h1>
+                            Healthcare <br>
+                            <span class="hero-highlight">At Your Convenience</span>
+                        </h1>
+                        <p>Connect with our expert homeopathic doctors from anywhere in the world. Get personalized treatment plans and ongoing support, whether online or at our clinics.</p>
+                        <div class="hero-buttons">
+                            <a href="#chat" class="hero-btn hero-btn-primary">
+                                <i class="fas fa-video"></i>
+                                Virtual Consultation
+                            </a>
+                            <a href="#contact" class="hero-btn hero-btn-secondary">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Find Nearby Clinic
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slider Navigation -->
+                <div class="slider-navigation">
+                    <button class="slider-nav-btn active" data-slide="0"></button>
+                    <button class="slider-nav-btn" data-slide="1"></button>
+                    <button class="slider-nav-btn" data-slide="2"></button>
+                </div>
+                
+                <!-- Slider Controls -->
+                <button class="slider-arrow slider-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-arrow slider-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
-            <button onclick="restartJourney()" style="margin-top: 20px;">फिर से पढ़ोगी? 💕</button>
         </div>
-    </div>
+    </section>
 
-    <div class="audio-notice" onclick="toggleMusic()">
-        🎵 संगीत चलाओ
-    </div>
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">Happy Patients</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Expert Doctors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Treatment Centers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- Audio element with your romantic music -->
-    <audio id="bgMusic" loop autoplay>
-        <source src="Untitled video - Made with Clipchamp.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-header">
+                <h2>Why Choose Homoeo Amigo?</h2>
+                <p>Experience healthcare that treats the root cause, not just symptoms. Our holistic approach ensures lasting wellness for you and your family.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>100% Natural</h3>
+                    <p>Safe, gentle remedies with no side effects. Our natural approach works in harmony with your body's healing mechanisms.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>Scientific Approach</h3>
+                    <p>Evidence-based treatments backed by modern research and clinical studies, ensuring effective and reliable results.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <h3>Expert Care</h3>
+                    <p>Experienced homeopathic doctors with specialized training in various health conditions and treatment protocols.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Personalized Treatment</h3>
+                    <p>Individual care plans designed specifically for your unique constitution, lifestyle, and health goals.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Long-term Wellness</h3>
+                    <p>Focus on building immunity and preventing disease recurrence through comprehensive lifestyle guidance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Online Consultations</h3>
+                    <p>Convenient virtual consultations with our expert doctors from the comfort of your home.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script>
-        let currentScreen = 'welcome';
-        let musicPlaying = false;
-        let noCount = 0;
+    <!-- Treatments Section -->
+    <section class="treatments">
+        <div class="container">
+            <div class="treatments-header">
+                <h2>Our Specialized Treatments</h2>
+                <p>Comprehensive homeopathic solutions for a wide range of health conditions</p>
+            </div>
+            <div class="treatments-grid">
+                <div class="treatment-card" onclick="location.href='pcos.html'">
+                    <div class="treatment-image">
+                        <i class="fas fa-venus"></i>
+                    </div>
+                    <div class="treatment-content">
+                        <h3>PCOS Treatment</h3>
+                        <p>Natural hormone balance restoration for PCOS with proven homeopathic remedies and lifestyle guidance.</p>
+                        <a href="pcos.html" class="treatment-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="treatment-card" onclick="location.href='asthma.html'">
+                    <div class="treatment-image">
+                        <i class="fas fa-lungs"></i>
+                    </div>
+                    <div class="treatment-content">
+                        <h3>Asthma & Respiratory</h3>
+                        <p>Breathe easy with our comprehensive respiratory treatments that strengthen lung function naturally.</p>
+                        <a href="asthma.html" class="treatment-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="treatment-card" onclick="location.href='arthritis.html'">
+                    <div class="treatment-image">
+                        <i class="fas fa-bone"></i>
+                    </div>
+                    <div class="treatment-content">
+                        <h3>Arthritis & Joint Pain</h3>
+                        <p>Reduce inflammation and restore mobility with gentle, effective homeopathic joint care solutions.</p>
+                        <a href="arthritis.html" class="treatment-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="treatment-card" onclick="location.href='hairfall.html'">
+                    <div class="treatment-image">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <div class="treatment-content">
+                        <h3>Hair Fall Treatment</h3>
+                        <p>Restore healthy hair growth with our specialized homeopathic treatments for all types of hair loss.</p>
+                        <a href="hairfall.html" class="treatment-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="treatment-card" onclick="location.href='diabetes.html'">
+                    <div class="treatment-image">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="treatment-content">
+                        <h3>Diabetes Management</h3>
+                        <p>Natural blood sugar regulation and diabetes complications prevention through holistic care.</p>
+                        <a href="diabetes.html" class="treatment-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="treatment-card" onclick="location.href='skin.html'">
+                    <div class="treatment-image">
+                        <i class="fas fa-spa"></i>
+                    </div>
+                    <div class="treatment-content">
+                        <h3>Skin Conditions</h3>
+                        <p>Clear, healthy skin through natural treatments for acne, eczema, psoriasis, and other skin issues.</p>
+                        <a href="skin.html" class="treatment-link">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // Create floating hearts
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'heart';
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.animationDelay = Math.random() * 5 + 's';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            document.getElementById('heartsContainer').appendChild(heart);
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Your Healing Journey?</h2>
+                <p>Join thousands of satisfied patients who have found lasting health and wellness through our natural homeopathic treatments.</p>
+                <div class="cta-buttons">
+                    <a href="book-appointment.html" class="cta-btn cta-btn-primary">
+                        <i class="fas fa-calendar-alt"></i>
+                        Book Free Consultation
+                    </a>
+                    <a href="tel:+917386521920" class="cta-btn cta-btn-secondary">
+                        <i class="fas fa-phone"></i>
+                        Call Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }
-
-        // Generate hearts continuously
-        setInterval(createHeart, 800);
-
-        function startJourney() {
-            hideAllScreens();
-            document.getElementById('question1').classList.remove('hidden');
-            animateTransition();
-            playMusic();
-            disableAllNoButtons(); // Disable all No buttons from the start
-        }
-
-        function nextQuestion(questionNumber) {
-            hideAllScreens();
-            
-            if (questionNumber === 2) {
-                document.getElementById('question2').classList.remove('hidden');
-            } else if (questionNumber === 3) {
-                document.getElementById('question3').classList.remove('hidden');
-            } else if (questionNumber === 4) {
-                document.getElementById('question4').classList.remove('hidden');
-            } else if (questionNumber === 5) {
-                document.getElementById('question5').classList.remove('hidden');
-            } else if (questionNumber === 6) {
-                document.getElementById('question6').classList.remove('hidden');
-            } else if (questionNumber === 7) {
-                document.getElementById('finalQuestion').classList.remove('hidden');
-            }
-            
-            animateTransition();
-        }
-
-        function disableAllNoButtons() {
-            document.querySelectorAll('.no-btn').forEach(btn => {
-                btn.classList.add('disabled');
-                btn.onclick = null;
-                btn.innerHTML = 'नहीं ';
-            });
-        }
-
-        function handleNo() {
-            noCount++;
-            const messages = [
-                "पक्का? फिर से सोचो... 💭",
-                "चलो ना, मुझे पता है तुम हाँ कहना चाहती हो! 😊",
-                "शायद गलत बटन दबा दिया? 🤔",
-                "तुम्हारी मुस्कान कुछ और कह रही है! फिर से कोशिश करो 😉",
-                "मुझे लगता है तुम्हारा दिल इस चुनाव से सहमत नहीं! 💕",
-                "ब्रह्मांड मुझे बता रहा है कि तुमने 'हाँ' कहना चाहा था 🌟",
-                "चलो मान लेते हैं कि ऐसा नहीं हुआ... इस बार हाँ पर क्लिक करो! 😄"
-            ];
-            
-            if (noCount <= messages.length) {
-                alert(messages[noCount - 1]);
-            } else {
-                alert("'नहीं' बटन खराब हो गया लगता है! अब यह सिर्फ 'हाँ' स्वीकार करता है 😉");
-                disableAllNoButtons();
-            }
-        }
-
-        function celebrate() {
-            hideAllScreens();
-            document.getElementById('celebration').classList.remove('hidden');
-            animateTransition();
-            createConfetti();
-            
-            // Create extra hearts for celebration
-            for (let i = 0; i < 20; i++) {
-                setTimeout(createHeart, i * 100);
-            }
-        }
-
-        function showGreetingCard() {
-            hideAllScreens();
-            document.getElementById('greetingCard').classList.remove('hidden');
-            animateTransition();
-            createCardSparkles();
-        }
-
-        function openCard() {
-            const card = document.getElementById('greetingCardElement');
-            card.classList.add('opened');
-            
-            // Create extra sparkles when card opens
-            setTimeout(() => {
-                createCardSparkles();
-            }, 1000);
-        }
-
-        function createCardSparkles() {
-            const sparklesContainer = document.getElementById('cardSparkles');
-            sparklesContainer.innerHTML = '';
-            
-            for (let i = 0; i < 15; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.className = 'sparkle';
-                sparkle.style.left = Math.random() * 100 + '%';
-                sparkle.style.top = Math.random() * 100 + '%';
-                sparkle.style.animationDelay = Math.random() * 2 + 's';
-                sparkle.style.animationDuration = (Math.random() * 2 + 1) + 's';
-                sparklesContainer.appendChild(sparkle);
-            }
-        }
-
-        function restartJourney() {
-            hideAllScreens();
-            document.getElementById('welcome').classList.remove('hidden');
-            animateTransition();
-            
-            // Reset the card
-            const card = document.getElementById('greetingCardElement');
-            card.classList.remove('opened');
-        }
-
-        function hideAllScreens() {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.add('hidden');
-            });
-        }
-
-        function animateTransition() {
-            const container = document.getElementById('mainContainer');
-            container.style.animation = 'none';
-            setTimeout(() => {
-                container.style.animation = 'slideUp 0.8s ease-out';
-            }, 10);
-        }
-
-        function createConfetti() {
-            const colors = ['#ff69b4', '#ff1493', '#ffb6c1', '#ffc0cb', '#ff8fab', '#ff6b9d'];
-            
-            for (let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    document.body.appendChild(confetti);
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h2>Get in Touch</h2>
+                    <p>Have questions about our treatments or want to schedule a consultation? We're here to help you on your journey to better health.</p>
                     
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 3000);
-                }, i * 30);
-            }
-        }
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Visit Our Center</h4>
+                                <p>C-79, C-Block, Sector-2<br>Noida, Uttar Pradesh – 201301</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Call Us</h4>
+                                <p>+91 - 7386521920<br>Mon-Sat: 9:00 AM - 8:00 PM</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <h4>Email Us</h4>
+                                <p>info@homoeoamigo.com<br>support@homoeoamigo.com</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Send us a Message</h3>
+                    <p class="form-subtitle">Fill out the form below and we'll get back to you as soon as possible.</p>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="condition">Health Condition</label>
+                            <select id="condition" class="form-control">
+                                <option value="">Select Condition</option>
+                                <option value="pcos">PCOS</option>
+                                <option value="asthma">Asthma</option>
+                                <option value="arthritis">Arthritis</option>
+                                <option value="diabetes">Diabetes</option>
+                                <option value="hairfall">Hair Fall</option>
+                                <option value="skin">Skin Issues</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" class="form-control" rows="4" required placeholder="Tell us about your health concerns..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        function playMusic() {
-            const audio = document.getElementById('bgMusic');
-            audio.volume = 0.3;
-            audio.play().catch(e => {
-                console.log('Auto-play prevented, user can click to play music');
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Contact Information -->
+                <div class="footer-contact-info">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> <strong>Corporate Address :</strong><br> C-79, C-Block, Sector-2,<br> Noida, Uttar Pradesh – 201301</li>
+                        <li><i class="fas fa-phone-alt"></i> <strong>Call Us :</strong> +91 - 7386521920</li>
+                        <li><i class="fas fa-envelope"></i> <strong>Mail Us :</strong> <a href="mailto:info@homoeoamigo.com">Click to mail us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="why-homeopathy.html">Why Homeopathy</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="videos.html">Videos</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms & Conditions</a></li>
+                    </ul>
+                </div>
+
+                <!-- Treatments -->
+                <div class="footer-treatments">
+                    <h3>Treatments</h3>
+                    <div class="treatment-columns">
+                        <ul>
+                            <li><a href="pcos.html">PCOS</a></li>
+                            <li><a href="physiotherapy.html">Physiotherapy</a></li>
+                            <li><a href="hairfall.html">Hair Fall Treatment</a></li>
+                            <li><a href="asthma.html">Asthma</a></li>
+                            <li><a href="arthritis.html">Arthritis</a></li>
+                            <li><a href="diabetes.html">Diabetes</a></li>
+                        </ul>
+                        <ul>
+                            <li><a href="jointpain.html">Joint Pain</a></li>
+                            <li><a href="acne.html">Acne</a></li>
+                            <li><a href="childhealth.html">Child Health</a></li>
+                            <li><a href="migraine.html">Migraine</a></li>
+                            <li><a href="psoriasis.html">Psoriasis</a></li>
+                            <li><a href="skin.html">Skin</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="footer-disclaimer">
+                <p><strong>Disclaimer :</strong> The information, response, advice provided or medicines prescribed by Homoeo Amigo to any query posted/mailed is solely on the basis of the information provided by you and is meant for general information only. Homoeo Amigo does not allow copying, cloning of its webpages and content and it will follow the legal notifications to protect its professional engagement.</p>
+            </div>
+
+            <!-- Bottom -->
+            <div class="footer-bottom">
+                <p>&copy; 2025 <span class="brand-highlight">Bhargava Phytolab Pvt Ltd</span>. All Right Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        // Hero Slider Functionality
+        const heroSlider = {
+            slides: document.querySelectorAll('.hero-slide'),
+            navBtns: document.querySelectorAll('.slider-nav-btn'),
+            prevBtn: document.querySelector('.slider-prev'),
+            nextBtn: document.querySelector('.slider-next'),
+            current: 0,
+            total: document.querySelectorAll('.hero-slide').length,
+            interval: null,
+            autoplayDelay: 6000, // 6 seconds between slides
+            isTransitioning: false,
+            
+            init() {
+                // Set initial positions
+                this.slides.forEach((slide, index) => {
+                    if (index === 0) {
+                        slide.classList.add('active');
+                    } else {
+                        slide.style.transform = 'translateX(100%)';
+                    }
+                });
+                
+                // Initialize autoplay
+                this.startAutoplay();
+                
+                // Add event listeners for navigation
+                this.navBtns.forEach((btn, index) => {
+                    btn.addEventListener('click', () => {
+                        if (!this.isTransitioning) {
+                            this.goToSlide(index);
+                        }
+                    });
+                });
+                
+                // Add event listeners for prev/next buttons
+                this.prevBtn.addEventListener('click', () => {
+                    if (!this.isTransitioning) {
+                        this.prevSlide();
+                    }
+                });
+                this.nextBtn.addEventListener('click', () => {
+                    if (!this.isTransitioning) {
+                        this.nextSlide();
+                    }
+                });
+                
+                // Pause autoplay on hover
+                const slider = document.querySelector('.hero-slider');
+                slider.addEventListener('mouseenter', () => this.stopAutoplay());
+                slider.addEventListener('mouseleave', () => this.startAutoplay());
+            },
+            
+            goToSlide(index, direction = 'next') {
+                if (this.isTransitioning) return;
+                
+                // Handle index bounds
+                if (index < 0) index = this.total - 1;
+                if (index >= this.total) index = 0;
+                
+                // Don't transition if it's the same slide
+                if (index === this.current) return;
+                
+                this.isTransitioning = true;
+                
+                const currentSlide = this.slides[this.current];
+                const nextSlide = this.slides[index];
+                
+                // Remove active state from navigation
+                this.navBtns[this.current].classList.remove('active');
+                
+                // Prepare next slide
+                nextSlide.style.transform = direction === 'next' ? 'translateX(100%)' : 'translateX(-100%)';
+                nextSlide.style.opacity = '0';
+                nextSlide.style.visibility = 'visible';
+                
+                // Force reflow
+                nextSlide.offsetHeight;
+                
+                // Animate current slide out
+                currentSlide.style.transform = direction === 'next' ? 'translateX(-100%)' : 'translateX(100%)';
+                currentSlide.style.opacity = '0';
+                
+                // Animate next slide in
+                setTimeout(() => {
+                    nextSlide.style.transform = 'translateX(0)';
+                    nextSlide.style.opacity = '1';
+                    nextSlide.classList.add('active');
+                }, 50);
+                
+                // Clean up after transition
+                setTimeout(() => {
+                    currentSlide.classList.remove('active');
+                    currentSlide.style.visibility = 'hidden';
+                    currentSlide.style.transform = 'translateX(100%)';
+                    
+                    this.current = index;
+                    this.navBtns[this.current].classList.add('active');
+                    this.isTransitioning = false;
+                }, 800);
+            },
+            
+            nextSlide() {
+                this.goToSlide(this.current + 1, 'next');
+            },
+            
+            prevSlide() {
+                this.goToSlide(this.current - 1, 'prev');
+            },
+            
+            startAutoplay() {
+                this.interval = setInterval(() => this.nextSlide(), this.autoplayDelay);
+            },
+            
+            stopAutoplay() {
+                clearInterval(this.interval);
+                this.interval = null;
+            }
+        };
+        
+        // Initialize slider on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            heroSlider.init();
+        });
+        
+        // Contact form handling
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                condition: document.getElementById('condition').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Simple validation
+            if (!formData.name || !formData.email || !formData.message) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Simulate form submission
+            const submitBtn = this.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call
+            setTimeout(() => {
+                alert('Thank you for your message! We will contact you soon.');
+                this.reset();
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }, 2000);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             });
-            musicPlaying = true;
+        });
+        
+        // Add scroll animation to stats
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stats = entry.target.querySelectorAll('.stat-number');
+                    stats.forEach(stat => {
+                        const finalValue = parseInt(stat.textContent.replace(/[^0-9]/g, ''));
+                        animateCounter(stat, finalValue);
+                    });
+                }
+            });
+        }, observerOptions);
+        
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            observer.observe(statsSection);
         }
-
-        function toggleMusic() {
-            const audio = document.getElementById('bgMusic');
-            if (musicPlaying) {
-                audio.pause();
-                document.querySelector('.audio-notice').innerHTML = '🔇 संगीत चलाओ';
-            } else {
-                audio.play();
-                document.querySelector('.audio-notice').innerHTML = '🎵 संगीत बज रहा है';
-            }
-            musicPlaying = !musicPlaying;
+        
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target.toLocaleString() + (element.textContent.includes('+') ? '+' : element.textContent.includes('%') ? '%' : '');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current).toLocaleString() + (element.textContent.includes('+') ? '+' : element.textContent.includes('%') ? '%' : '');
+                }
+            }, 50);
         }
-
-        // Try to play music on first user interaction
-        document.addEventListener('click', function() {
-            const audio = document.getElementById('bgMusic');
-            if (!musicPlaying && audio.paused) {
-                audio.volume = 0.3;
-                audio.play().catch(e => {});
-            }
-        }, { once: true });
     </script>
 </body>
-
 </html>
