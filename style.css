@@ -265,7 +265,6 @@ ul {
     min-height: 44px;
     border-radius: 4px;
     transition: all 0.3s ease;
-    display: flex;
     align-items: center;
     justify-content: center;
 }
@@ -1517,6 +1516,11 @@ ul {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+    
+    /* Hide navigation buttons in header on mobile */
+    .navbar > .nav-buttons {
+        display: none;
     }
     
     .navbar {
